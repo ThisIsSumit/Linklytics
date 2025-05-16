@@ -1,8 +1,12 @@
 import { createContext, useContext, useState } from "react";
+import PropTypes from "prop-types";
 
 const ContextApi = createContext();
-
 export const ContextProvider = ({ children }) => {
+    ContextProvider.propTypes = {
+        children: PropTypes.node.isRequired,
+    };
+
     const getToken = localStorage.getItem("JWT_TOKEN")
         ? JSON.parse(localStorage.getItem("JWT_TOKEN"))
         : null;
@@ -14,10 +18,8 @@ export const ContextProvider = ({ children }) => {
         setToken,
     };
 
-    return <ContextApi.Provider value={sendData}>{children}</ContextApi.Provider>
+    return <ContextApi.Provider value={sendData}>{children}</ContextApi.Provider>;
 };
-
-
 export const useStoreContext = () => {
     const context = useContext(ContextApi);
     return context;
